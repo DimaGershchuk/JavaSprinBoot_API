@@ -1,6 +1,10 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="grocery_lists")
@@ -11,6 +15,10 @@ public class GroceryList {
     private Long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "groceryList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Product> products = new ArrayList<>();
 
     public GroceryList() {
     }
