@@ -18,7 +18,11 @@ public class ProductController {
     }
 
     @GetMapping("grocery-lists/{listId}/products")
-    public List<Product> getProducts(@PathVariable Long listId){
+    public List<Product> getProducts(@PathVariable Long listId, @RequestParam(required = false) String category){
+
+        if(category != null && !category.isEmpty()){
+            return productService.getProductsByCategory(listId, category);
+        }
         return productService.getProductsByList(listId);
     }
 
@@ -36,6 +40,5 @@ public class ProductController {
     public Product toggleChecked(@PathVariable Long productId) {
         return productService.toggleChecked(productId);
     }
-
 
 }

@@ -24,6 +24,10 @@ public class ProductService {
         return productRepository.findByGroceryListId(listId);
     }
 
+    public List<Product> getProductsByCategory(Long listId, String categoryName){
+        return productRepository.findByCategoryName(listId, categoryName);
+    }
+
     public Product createProduct(Long listId, Product product){
         GroceryList list = groceryListRepository.findById(listId).orElseThrow(() -> new RuntimeException("List not found"));
 

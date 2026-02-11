@@ -19,6 +19,10 @@ public class Product {
     @JsonBackReference
     private GroceryList groceryList;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="category_id")
+    private Category category;
+
 
     public Long getId() {
         return id;
@@ -50,5 +54,13 @@ public class Product {
 
     public void setGroceryList(GroceryList groceryList) {
         this.groceryList = groceryList;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
