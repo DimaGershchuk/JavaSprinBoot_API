@@ -31,12 +31,12 @@ public class ProductController {
         return productService.createProduct(listId, product);
     }
 
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("products/{productId}")
     public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
     }
 
-    @PatchMapping("/products/{productId}/toggle")
+    @PatchMapping("products/{productId}/toggle")
     public Product toggleChecked(@PathVariable Long productId) {
         return productService.toggleChecked(productId);
     }
