@@ -16,7 +16,7 @@ public class RecipeService {
     }
 
     public List<Recipe> getAllRecipes(){
-        return recipeRepository.findAll();
+        return recipeRepository.findAllWithIngredients();
     }
 
     public Recipe getRecipeById(Long id){

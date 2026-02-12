@@ -1,6 +1,6 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class Recipe {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<RecipeIngredient> ingredients = new ArrayList<>();
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<RecipeIngredient> ingredients;
 
     public Long getId() {
         return id;
