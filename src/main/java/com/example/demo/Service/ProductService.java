@@ -25,7 +25,7 @@ public class ProductService {
     }
 
     public List<Product> getProductsByCategory(Long listId, String categoryName){
-        return productRepository.findByCategoryName(listId, categoryName);
+        return productRepository.findByGroceryListIdAndCategoryNameIgnoreCase(listId, categoryName);
     }
 
     public Product createProduct(Long listId, Product product){

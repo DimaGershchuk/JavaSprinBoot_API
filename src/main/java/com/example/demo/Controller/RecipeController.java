@@ -29,6 +29,11 @@ public class RecipeController {
         return recipeService.createRecipe(recipe);
     }
 
+    @PostMapping("/{recipeId}/add-to-list/{listId}")
+    public void addRecipeToGroceryList(@PathVariable Long recipeId, @PathVariable Long listId){
+        recipeService.addIngredientsToList(recipeId, listId);
+    }
+
     @PutMapping("/{id}")
     public Recipe updateRecipe(@PathVariable Long id,
                                @RequestBody Recipe recipe) {

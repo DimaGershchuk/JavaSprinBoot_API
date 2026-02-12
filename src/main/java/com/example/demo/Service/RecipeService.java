@@ -1,18 +1,25 @@
 package com.example.demo.Service;
 
+import com.example.demo.Entity.GroceryList;
+import com.example.demo.Entity.Product;
 import com.example.demo.Entity.Recipe;
 import com.example.demo.Entity.RecipeIngredient;
+import com.example.demo.Repository.GroceryListRepository;
 import com.example.demo.Repository.RecipeRepository;
+import org.apache.commons.logging.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RecipeService {
-    private final RecipeRepository recipeRepository;
 
-    public RecipeService(RecipeRepository recipeRepository) {
+    private final RecipeRepository recipeRepository;
+    private final GroceryListRepository groceryListRepository;
+
+    public RecipeService(RecipeRepository recipeRepository, GroceryListRepository groceryListRepository) {
         this.recipeRepository = recipeRepository;
+        this.groceryListRepository = groceryListRepository;
     }
 
     public List<Recipe> getAllRecipes(){
@@ -29,6 +36,23 @@ public class RecipeService {
         }
 
         return recipeRepository.save(recipe);
+    }
+
+    public void addIngredientsToList(Long recipeId, Long listID){
+        Recipe recipe = recipeRepository.findByIdWithIngredients(recipeId).orElseThrow(() -> new RuntimeException("Recipe not found"));
+        GroceryList groceryList = groceryListRepository.findById(listID).orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        for (RecipeIngredient ingredient : recipe.getIngredients()){
+            Product product = new Product();
+
+            product.setName(ingredient.getName());
+            product.setChecked(false);
+            product.setGroceryList(groceryList);
+
+            groceryList.getProducts().add(product);
+        }
+
+        groceryListRepository.save(groceryList);
     }
 
     public Recipe updateRecipe(Long id, Recipe updatedRecipe){

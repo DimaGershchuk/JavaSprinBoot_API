@@ -36,7 +36,7 @@ public class ProductController {
         productService.deleteProduct(productId);
     }
 
-    @PatchMapping("products/{productId}/toggle")
+    @PatchMapping(" products/{productId}/toggle")
     public Product toggleChecked(@PathVariable Long productId) {
         return productService.toggleChecked(productId);
     }

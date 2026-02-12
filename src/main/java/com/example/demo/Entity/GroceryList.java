@@ -16,6 +16,8 @@ public class GroceryList {
 
     private String name;
 
+
+
     @OneToMany(mappedBy = "groceryList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Product> products = new ArrayList<>();
@@ -42,5 +44,13 @@ public class GroceryList {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
