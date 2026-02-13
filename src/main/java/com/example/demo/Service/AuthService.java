@@ -31,7 +31,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        return jwtService.generateToken(user);
+        return jwtService.generateToken(user.getUsername());
     }
 
     public String login(String username, String password){
@@ -40,7 +40,7 @@ public class AuthService {
         if(!passwordEncoder.matches(password, user.getPassword())){
             throw new RuntimeException("Invalid password");
         }
-        return jwtService.generateToken(user);
+        return jwtService.generateToken(user.getUsername());
     }
 
 }

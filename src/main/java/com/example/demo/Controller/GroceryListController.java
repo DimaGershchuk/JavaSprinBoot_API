@@ -20,7 +20,7 @@ public class GroceryListController {
 
     @GetMapping
     public List<GroceryList> getAll() {
-        return service.getAll();
+        return service.getUserLists();
     }
 
     @PostMapping

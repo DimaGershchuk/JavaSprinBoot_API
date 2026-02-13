@@ -46,8 +46,9 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // логін і реєстрація відкриті
-                        .anyRequest().authenticated() // все інше захищене
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/grocery-lists/**").authenticated()
+                        .anyRequest().authenticated()
                 )
 
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

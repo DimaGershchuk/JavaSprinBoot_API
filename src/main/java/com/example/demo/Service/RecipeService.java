@@ -7,6 +7,7 @@ import com.example.demo.Entity.RecipeIngredient;
 import com.example.demo.Repository.GroceryListRepository;
 import com.example.demo.Repository.RecipeRepository;
 import org.apache.commons.logging.Log;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,16 @@ public class RecipeService {
 
     public Recipe getRecipeById(Long id){
         return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found"));
+    }
+
+    public List<Recipe> getUserRecipes() {
+
+        String username = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return recipeRepository.findByUserUsername(username);
     }
 
     public Recipe createRecipe(Recipe recipe) {

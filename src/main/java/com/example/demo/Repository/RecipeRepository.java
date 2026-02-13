@@ -17,4 +17,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query("SELECT r FROM Recipe r WHERE r.favorite = true")
     List<Recipe> findAllFavorites();
+
+    List<Recipe> findByUserUsername(String username);
 }

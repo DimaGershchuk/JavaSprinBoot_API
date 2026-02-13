@@ -1,7 +1,10 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.GroceryList;
+import com.example.demo.Entity.User;
 import com.example.demo.Repository.GroceryListRepository;
+import com.example.demo.Repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +12,20 @@ import java.util.List;
 @Service
 public class GroceryListService {
     private final GroceryListRepository repository;
+    private final UserRepository userRepository;
 
-    public GroceryListService(GroceryListRepository repository) {
+    public GroceryListService(GroceryListRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public List<GroceryList> getAll() {
         return repository.findAll();
+    }
+
+    public List<GroceryList> getUserLists(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return repository.findByUserUsername(username);
     }
 
     public GroceryList getById(Long id) {
@@ -24,9 +34,15 @@ public class GroceryListService {
     }
 
     public GroceryList create(GroceryList groceryList) {
-        if (groceryList.getName() == null || groceryList.getName().isEmpty()) {
-            throw new RuntimeException("Name cannot be empty");
-        }
+        String username = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        groceryList.setUser(user);
 
         return repository.save(groceryList);
     }
