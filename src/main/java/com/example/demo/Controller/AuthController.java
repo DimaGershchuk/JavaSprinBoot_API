@@ -43,7 +43,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(user.getUsername());
 
         return new AuthResponse(token);
     }
@@ -58,7 +58,7 @@ public class AuthController {
                 )
         );
 
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(request.getUsername());
 
         return new AuthResponse(token);
     }
