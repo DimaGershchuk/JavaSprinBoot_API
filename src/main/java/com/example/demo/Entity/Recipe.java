@@ -20,6 +20,9 @@ public class Recipe {
 
     private String imageUrl;
 
+    @Column(name="is_favorite")
+    private Boolean favorite = false;
+
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<RecipeIngredient> ingredients;
@@ -62,5 +65,13 @@ public class Recipe {
 
     public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 }

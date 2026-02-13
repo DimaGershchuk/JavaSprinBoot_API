@@ -14,4 +14,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query("SELECT DISTINCT r FROM Recipe r LEFT JOIN FETCH r.ingredients WHERE r.id = :id")
     Optional<Recipe> findByIdWithIngredients(@Param("id") Long id);
+
+    @Query("SELECT r FROM Recipe r WHERE r.favorite = true")
+    List<Recipe> findAllFavorites();
 }

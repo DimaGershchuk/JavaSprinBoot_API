@@ -65,6 +65,16 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public List<Recipe> getFavoriteRecipes() {
+        return recipeRepository.findAllFavorites();
+    }
+
+    public Recipe toggleFavorite(Long id) {
+        Recipe recipe = getRecipeById(id);
+        recipe.setFavorite(!recipe.getFavorite());
+        return recipeRepository.save(recipe);
+    }
+
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
     }

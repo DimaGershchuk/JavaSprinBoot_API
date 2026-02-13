@@ -24,6 +24,11 @@ public class RecipeController {
         return recipeService.getRecipeById(id);
     }
 
+    @GetMapping("/favorites")
+    public List<Recipe> getFavorites() {
+        return recipeService.getFavoriteRecipes();
+    }
+
     @PostMapping
     public Recipe createRecipe(@RequestBody Recipe recipe) {
         return recipeService.createRecipe(recipe);
@@ -38,6 +43,11 @@ public class RecipeController {
     public Recipe updateRecipe(@PathVariable Long id,
                                @RequestBody Recipe recipe) {
         return recipeService.updateRecipe(id, recipe);
+    }
+
+    @PatchMapping("/{id}/favorite")
+    public Recipe toggleFavorite(@PathVariable Long id) {
+        return recipeService.toggleFavorite(id);
     }
 
     @DeleteMapping("/{id}")
