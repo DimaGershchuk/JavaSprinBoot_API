@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import com.example.demo.DTO.BudgetStatus;
 import com.example.demo.Entity.Category;
 import com.example.demo.Entity.Expense;
+import com.example.demo.Entity.Period;
 import com.example.demo.Entity.User;
 import com.example.demo.Repository.CategoryRepository;
 import com.example.demo.Repository.ExpenseRepository;
@@ -52,18 +53,18 @@ public class ExpenseService {
         return expenseRepository.findByUserUsernameOrderByDateDesc(username);
     }
 
-    public BudgetStatus getBudgetStatus(String username, String period){
+    public BudgetStatus getBudgetStatus(String username, Period period){
         LocalDate now = LocalDate.now();
 
         LocalDate start;
 
-        switch (period.toUpperCase()){
-            case "DAILY":
+        switch (period){
+            case DAILY:
                 start = now;
                 break;
-            case "WEEKLY":
+            case WEEKLY:
                 start = now.minusDays(7);
-            case "MONTHLY":
+            case MONTHLY:
                 start = now.minusMonths(1);
                 break;
             default:
