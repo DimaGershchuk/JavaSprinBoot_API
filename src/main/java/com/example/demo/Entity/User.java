@@ -15,6 +15,10 @@ public class User {
     private String username;
     private String password;
 
+
+
+    private Double budgetLimit;
+
     private String role = "USER";
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -72,5 +76,13 @@ public class User {
 
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    public Double getBudgetLimit() {
+        return budgetLimit;
+    }
+
+    public void setBudgetLimit(Double budgetLimit) {
+        this.budgetLimit = budgetLimit;
     }
 }
