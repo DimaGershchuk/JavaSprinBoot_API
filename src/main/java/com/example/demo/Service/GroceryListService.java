@@ -47,6 +47,14 @@ public class GroceryListService {
         return repository.save(groceryList);
     }
 
+    public void rename(Long id, String newName){
+        GroceryList groceryList = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        groceryList.setName(newName);
+
+        repository.save(groceryList);
+    }
+
     public void delete(Long id) {
         repository.deleteById(id);
     }

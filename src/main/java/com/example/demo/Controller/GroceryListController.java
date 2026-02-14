@@ -4,6 +4,7 @@ import com.example.demo.Entity.GroceryList;
 import com.example.demo.Repository.GroceryListRepository;
 import com.example.demo.Service.GroceryListService;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public class GroceryListController {
     @GetMapping("/{id}")
     public GroceryList getByid(@PathVariable Long id){
         return  service.getById(id);
+    }
+
+    @PutMapping("/{id}/rename")
+    public ResponseEntity<Void> rename(@PathVariable Long id, @RequestParam String newName) {
+        service.rename(id, newName);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
