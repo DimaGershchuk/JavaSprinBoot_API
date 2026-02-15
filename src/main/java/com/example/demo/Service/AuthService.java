@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import com.example.demo.Entity.User;
 import com.example.demo.JWT.JWTService;
 import com.example.demo.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class AuthService {
 
         return jwtService.generateToken(user.getUsername());
     }
+
 
     public String login(String username, String password){
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));

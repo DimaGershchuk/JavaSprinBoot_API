@@ -15,7 +15,7 @@ public class JWTService {
     private static final String SECRET =
             "my-super-secret-key-that-should-be-very-long-and-secure-for-production";
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 годин
+    private static final long EXPIRATION_TIME = 1000 * 60 * 15; // 15 minutes
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
