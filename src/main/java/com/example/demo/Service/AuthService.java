@@ -45,4 +45,19 @@ public class AuthService {
         return jwtService.generateToken(user.getUsername());
     }
 
+    public void updateBudgetLimit(String username, Double limit){
+        User user = userRepository.findByUsername(username).orElseThrow();
+
+        user.setBudgetLimit(limit);
+
+        userRepository.save(user);
+    }
+
+    public Double getBudgetLimit(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow();
+
+        return user.getBudgetLimit();
+    }
+
 }
