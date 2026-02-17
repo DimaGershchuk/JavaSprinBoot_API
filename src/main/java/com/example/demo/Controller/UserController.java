@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DTO.BudgetLimit;
+import com.example.demo.DTO.UserUpdate;
+import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,4 +35,14 @@ public class UserController {
                 userService.getBudgetLimit(username)
         );
     }
+
+    @PutMapping("/update-details")
+    public ResponseEntity<User> updateProfile(@RequestBody UserUpdate dto, Authentication authentication){
+        String username = authentication.getName();
+
+        User updatedUser = userService.updateUserDetails(username, dto);
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
 }
