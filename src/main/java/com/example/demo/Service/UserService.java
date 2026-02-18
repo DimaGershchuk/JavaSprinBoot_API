@@ -17,6 +17,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public User getCurrentUser(String username){
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     public void updateBudgetLimit(String username, Double limit) {
 
         User user = userRepository.findByUsername(username)
