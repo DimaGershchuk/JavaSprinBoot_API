@@ -46,10 +46,11 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/grocery-lists/**").authenticated()
                         .requestMatchers("/images/**").permitAll()
-                        .requestMatchers("/api/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
 
