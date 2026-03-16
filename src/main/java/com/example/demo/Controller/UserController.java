@@ -37,7 +37,6 @@ public class UserController {
     public ResponseEntity<Double> getBudget(Authentication authentication){
 
         String username = authentication.getName();
-
         return ResponseEntity.ok(
                 userService.getBudgetLimit(username)
         );
