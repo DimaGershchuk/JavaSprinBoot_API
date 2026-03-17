@@ -4,6 +4,7 @@ import com.example.demo.Entity.GroceryList;
 import com.example.demo.Entity.Product;
 import com.example.demo.Repository.GroceryListRepository;
 import com.example.demo.Repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,16 @@ public class ProductService {
 
         product.setChecked(!product.getChecked());
         return productRepository.save(product);
+    }
+
+    @Transactional // Важливо для операцій видалення
+    public void deleteCheckedProductsByList(Long listId) {
+        productRepository.deleteByGroceryListIdAndIsCheckedTrue(listId);
+    }
+
+    @Transactional
+    public void deleteAllProductsByList(Long listId) {
+        productRepository.deleteByGroceryListId(listId);
     }
 
 }

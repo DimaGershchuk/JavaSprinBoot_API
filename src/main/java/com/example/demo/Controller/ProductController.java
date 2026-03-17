@@ -36,9 +36,18 @@ public class ProductController {
         productService.deleteProduct(productId);
     }
 
-    @PatchMapping(" products/{productId}/toggle")
+    @PatchMapping("products/{productId}/toggle")
     public Product toggleChecked(@PathVariable Long productId) {
         return productService.toggleChecked(productId);
     }
 
+    @DeleteMapping("grocery-lists/{listId}/products/checked")
+    public void deleteCheckedProducts(@PathVariable Long listId) {
+        productService.deleteCheckedProductsByList(listId);
+    }
+
+    @DeleteMapping("grocery-lists/{listId}/products")
+    public void deleteAllProductsFromList(@PathVariable Long listId) {
+        productService.deleteAllProductsByList(listId);
+    }
 }
