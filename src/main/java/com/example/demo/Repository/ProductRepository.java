@@ -9,5 +9,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByGroceryListId(Long groceryListId);
     List<Product> findByGroceryListIdAndCategoryNameIgnoreCase(Long groceryListId, String categoryName);
     void deleteByGroceryListId(Long listId);
-    void deleteByGroceryListIdAndIsCheckedTrue(Long listId);
+    void deleteByGroceryListIdAndCheckedTrue(Long listId);
 }

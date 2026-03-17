@@ -51,7 +51,7 @@ public class ProductService {
 
     @Transactional // Важливо для операцій видалення
     public void deleteCheckedProductsByList(Long listId) {
-        productRepository.deleteByGroceryListIdAndIsCheckedTrue(listId);
+        productRepository.deleteByGroceryListIdAndCheckedTrue(listId);
     }
 
     @Transactional
