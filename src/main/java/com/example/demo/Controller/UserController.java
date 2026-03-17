@@ -17,6 +17,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/me")
+    public User getCurrentUser(Authentication authentication){
+        String username = authentication.getName();
+
+        return userService.getCurrentUser(username);
+    }
+
     @PutMapping("/budget")
     public ResponseEntity<Void> updateBudget(@RequestBody BudgetLimit dto, Authentication authentication){
         String username = authentication.getName();
@@ -30,7 +37,6 @@ public class UserController {
     public ResponseEntity<Double> getBudget(Authentication authentication){
 
         String username = authentication.getName();
-
         return ResponseEntity.ok(
                 userService.getBudgetLimit(username)
         );
