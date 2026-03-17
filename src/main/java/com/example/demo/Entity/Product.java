@@ -12,7 +12,7 @@ public class Product {
     private Long id;
 
     private String name;
-    private Boolean checked;
+    private Boolean checked = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="grocery_lists_id")
@@ -45,7 +45,7 @@ public class Product {
     }
 
     public void setChecked(Boolean checked) {
-        checked = checked;
+        this.checked = checked;
     }
 
     public GroceryList getGroceryList() {
