@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DTO.AuthResponse;
 import com.example.demo.DTO.BudgetLimit;
 import com.example.demo.DTO.UserUpdate;
 import com.example.demo.Entity.User;
@@ -43,12 +44,12 @@ public class UserController {
     }
 
     @PutMapping("/update-details")
-    public ResponseEntity<User> updateProfile(@RequestBody UserUpdate dto, Authentication authentication){
-        String username = authentication.getName();
+    public ResponseEntity<AuthResponse> updateProfile(@RequestBody UserUpdate dto, Authentication authentication) {
+        String currentUsername = authentication.getName();
 
-        User updatedUser = userService.updateUserDetails(username, dto);
+        AuthResponse response = userService.updateUserDetails(currentUsername, dto);
 
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(response);
     }
 
 }

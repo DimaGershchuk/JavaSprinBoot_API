@@ -1,7 +1,9 @@
 package com.example.demo.Service;
 
+import com.example.demo.DTO.AuthResponse;
 import com.example.demo.DTO.UserUpdate;
 import com.example.demo.Entity.User;
+import com.example.demo.JWT.JWTService;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,15 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService; // Використовуємо твій клас тут
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    // Оновлений конструктор для ін'єкції саме твого сервісу
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       JWTService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public User getCurrentUser(String username){
@@ -39,17 +46,26 @@ public class UserService {
         return user.getBudgetLimit();
     }
 
-    public User updateUserDetails(String username, UserUpdate dto) {
+    public AuthResponse updateUserDetails(String username, UserUpdate dto) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        user.setUsername(dto.getName());
-        user.setEmail(dto.getEmail());
+        if (dto.getName() != null && !dto.getName().trim().isEmpty()) {
+            user.setUsername(dto.getName());
+        }
+
+        if (dto.getEmail() != null && !dto.getEmail().trim().isEmpty()) {
+            user.setEmail(dto.getEmail());
+        }
 
         if (dto.getPassword() != null && !dto.getPassword().trim().isEmpty()) {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        String newToken = jwtService.generateToken(savedUser.getUsername());
+
+        return new AuthResponse(newToken, savedUser.getUsername());
     }
 }
